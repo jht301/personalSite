@@ -22,7 +22,7 @@ export default function ConsoleShell({ children, isMobileMode, activeCartridge, 
         "relative mx-auto transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col items-center justify-center",
         "bg-console-light-gray shadow-[inset_-4px_-4px_10px_rgba(0,0,0,0.1),_10px_10px_20px_rgba(0,0,0,0.3)]",
         isMobileMode
-          ? "w-[95vw] max-w-[400px] h-[70dvh] rounded-[20px] p-1.5"
+          ? "w-[95vw] max-w-[400px] h-[82dvh] rounded-[20px] p-1.5"
           : "w-[80vw] max-w-[1200px] h-[90vh] max-h-[900px] rounded-[40px] p-3"
       )}
       style={{

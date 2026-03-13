@@ -88,7 +88,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-[100dvh] flex items-center justify-center p-2 sm:p-8 bg-zinc-950 overflow-hidden relative">
+    <main className="min-h-[100dvh] flex items-center justify-center p-1 sm:p-8 bg-zinc-950 overflow-hidden relative">
 
       {/* Background ambient light */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-800 to-zinc-950 -z-10"></div>

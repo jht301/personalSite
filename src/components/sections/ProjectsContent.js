@@ -38,10 +38,12 @@ export default function ProjectsContent() {
         </p>
 
         {projects.map((p, i) => (
-          <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" className="block border border-zinc-600 p-4 bg-zinc-800/50 shadow-md rounded hover:bg-zinc-700/50 transition-colors text-center">
-            <span className="font-pixel text-sm font-bold text-white">{p.title}</span>
-            <p className="text-sm text-zinc-200 mt-2 mb-3">{p.blurb}</p>
-            <img src={p.image} alt={p.title} className="w-full rounded border border-zinc-600" />
+          <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" className="flex flex-col min-[850px]:flex-row min-[850px]:items-stretch border border-zinc-600 bg-zinc-800/50 shadow-md rounded hover:bg-zinc-700/50 transition-colors overflow-hidden text-center min-[850px]:text-left">
+            <div className="p-4 min-[850px]:flex-shrink-0 min-[850px]:w-[25%] min-[850px]:flex min-[850px]:flex-col min-[850px]:justify-center">
+              <span className="font-pixel text-sm font-bold text-white">{p.title}</span>
+              <p className="text-sm text-zinc-200 mt-2 mb-3 min-[850px]:mb-0">{p.blurb}</p>
+            </div>
+            <img src={p.image} alt={p.title} className="w-full min-[850px]:w-[75%] rounded min-[850px]:rounded-none border-t min-[850px]:border-t-0 min-[850px]:border-l border-zinc-600 object-cover object-top" />
           </a>
         ))}
       </div>
