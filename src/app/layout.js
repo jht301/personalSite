@@ -24,6 +24,17 @@ export const metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  openGraph: {
+    title: 'Jack | Playable Portfolio',
+    description: 'A retro handheld-inspired portfolio website.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Jack | Playable Portfolio',
+    description: 'A retro handheld-inspired portfolio website.',
+    images: ['/og-image.png'],
+  },
 };
 
 export default function RootLayout({ children }) {
