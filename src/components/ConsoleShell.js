@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { useRef, useCallback } from 'react';
 import { StartButton, SelectButton, DPad, ActionButtons } from './HardwareControls';
 
-export default function ConsoleShell({ children, isMobileMode, activeCartridge, onEject, onSelectContact }) {
+export default function ConsoleShell({ children, isMobileMode, activeCartridge, onEject, onSelectContact, onGamepadInput }) {
   const screenRef = useRef(null);
 
   const scrollScreen = useCallback((direction) => {
@@ -65,7 +65,13 @@ export default function ConsoleShell({ children, isMobileMode, activeCartridge, 
 
               {/* Left Side: D-Pad */}
               <div className="pointer-events-auto">
-                <DPad small={isMobileMode} onUp={() => scrollScreen('up')} onDown={() => scrollScreen('down')} />
+                <DPad
+                  small={isMobileMode}
+                  onUp={() => { scrollScreen('up'); onGamepadInput?.('up'); }}
+                  onDown={() => { scrollScreen('down'); onGamepadInput?.('down'); }}
+                  onLeft={() => onGamepadInput?.('left')}
+                  onRight={() => onGamepadInput?.('right')}
+                />
               </div>
 
               {/* Center: Start / Select */}
@@ -79,7 +85,11 @@ export default function ConsoleShell({ children, isMobileMode, activeCartridge, 
 
               {/* Right Side: A/B Buttons */}
               <div className={clsx("pointer-events-auto", isMobileMode ? "pb-2 -mr-4" : "pb-4")}>
-                <ActionButtons small={isMobileMode} />
+                <ActionButtons
+                  small={isMobileMode}
+                  onA={() => onGamepadInput?.('a')}
+                  onB={() => onGamepadInput?.('b')}
+                />
               </div>
 
             </div>

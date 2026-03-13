@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import ConsoleShell from '@/components/ConsoleShell';
 import { CartridgeSelector } from '@/components/CartridgeSystem';
@@ -11,6 +11,7 @@ import JackalContent from '@/components/sections/JackalContent';
 import ProjectsContent from '@/components/sections/ProjectsContent';
 import ContactContent from '@/components/sections/ContactContent';
 import AutomateMCAContent from '@/components/sections/AutomateMCAContent';
+import SecretContent from '@/components/sections/SecretContent';
 
 const CARTRIDGES = [
   { id: 'about', title: 'About Jack', colorClass: 'bg-console-red' },
@@ -33,6 +34,23 @@ export default function Home() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Konami code: track last 10 gamepad inputs
+  const konamiBuffer = useRef([]);
+  const KONAMI = ['up','up','down','down','left','right','left','right','b','a'];
+
+  const handleGamepadInput = useCallback((input) => {
+    const buf = konamiBuffer.current;
+    buf.push(input);
+    if (buf.length > 10) buf.shift();
+    if (buf.length === 10 && KONAMI.every((k, i) => buf[i] === k)) {
+      konamiBuffer.current = [];
+      if (activeCartridge?.id === 'secret') return;
+      setIsLoading(true);
+      setActiveCartridge({ id: 'secret', title: '???', colorClass: 'bg-green-600' });
+      setTimeout(() => setIsLoading(false), 1200);
+    }
+  }, [activeCartridge]);
 
   const handleSelectCartridge = (cartridge, e) => {
     if (activeCartridge?.id === cartridge.id) return;
@@ -83,6 +101,7 @@ export default function Home() {
       case 'projects': return <ProjectsContent />;
       case 'automatemca': return <AutomateMCAContent />;
       case 'contact': return <ContactContent />;
+      case 'secret': return <SecretContent />;
       default: return <HomeContent />;
     }
   };
@@ -113,6 +132,7 @@ export default function Home() {
               activeCartridge={activeCartridge}
               onEject={handleEject}
               onSelectContact={handleSelectContact}
+              onGamepadInput={handleGamepadInput}
             >
               <AnimatePresence mode="wait">
                 <motion.div
@@ -214,7 +234,9 @@ function BootScreen({ title }) {
         className="text-console-magenta font-pixel text-center space-y-4"
       >
         <div className="text-xl tracking-widest drop-shadow-[0_0_10px_rgba(247,37,133,0.8)]">SYSTEM OS</div>
-        <div className="text-[10px] text-zinc-400 mt-8">Loading {title}...</div>
+        <div className="text-[10px] text-zinc-400 mt-8">
+          {title === '???' ? 'CHEAT CODE ACTIVATED...' : `Loading ${title}...`}
+        </div>
       </motion.div>
     </div>
   );
