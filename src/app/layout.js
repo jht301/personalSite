@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 const inter = Inter({
@@ -42,6 +43,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.variable} ${pixelFont.variable} antialiased`}>
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
