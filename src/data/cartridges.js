@@ -3,7 +3,6 @@
 export const CARTRIDGES = [
   { id: 'about', title: 'About Jack', icon: 'about', color: '#E63946', accent: '#FF7A84' },
   { id: 'jackal', title: 'Jackal Games', icon: 'jackal', color: '#059669', accent: '#34D399' },
-  { id: 'automatemca', title: 'Automate MCA', icon: 'automatemca', color: '#7B2CBF', accent: '#C792F5' },
   { id: 'games', title: 'Game Lab', icon: 'games', color: '#E8760C', accent: '#FBBF24' },
   { id: 'lab', title: 'Apps & Tools', icon: 'lab', color: '#D6246E', accent: '#F78FB8' },
   { id: 'projects', title: 'Websites', icon: 'projects', color: '#0E7FC2', accent: '#7DD3FC' },

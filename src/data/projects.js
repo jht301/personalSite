@@ -5,6 +5,8 @@ export const GAMES = [
     title: 'Wildcard Ruins',
     tagline: '3D action RPG where your deck is your mana.',
     status: 'In development',
+    url: 'https://opennet-lzi2.onrender.com/',
+    linkLabel: 'Play in browser',
     image: { src: '/projects/wildcard.jpg', alt: 'Wildcard Ruins title screen: a hooded hero with a staff in a village', shape: 'wide' },
     description:
       'A real-time action RPG that runs in the browser. Make a hero, explore an island of overgrown ruins, and fight creatures live while playing spell cards drawn from a deck that doubles as your mana pool.',
@@ -21,6 +23,8 @@ export const GAMES = [
     title: 'NetBattle Arena',
     tagline: 'Grid-based battler built for one-thumb play.',
     status: 'In development',
+    url: 'https://webbattle.jackhterzi.workers.dev/',
+    linkLabel: 'Play in browser',
     image: { src: '/projects/netbattle.png', alt: 'NetBattle Arena title screen and menu', shape: 'tall' },
     description:
       'A 2D grid battle game with a dual-screen layout: the battlefield on top, touch controls below. Dodge across your side of the grid, fire your buster, and play chips from a 20-chip deck against viruses and bosses.',

@@ -62,6 +62,10 @@ export function Cartridge({ item, onClick, isSelected }) {
 }
 
 export function CartridgeSelector({ items, onSelect, activeCartridge, insertingCartridge }) {
+  // The shelf is 3 wide on phones and 2 wide on desktop; pad with empty
+  // slots so neither layout ends on a ragged row.
+  const emptySlots = (6 - (items.length % 6)) % 6;
+
   return (
     <div className="shelf rounded-2xl p-2.5 desk:p-4 w-full desk:w-auto">
       <div className="flex items-center justify-between mb-2 desk:mb-3 px-0.5">
@@ -78,6 +82,15 @@ export function CartridgeSelector({ items, onSelect, activeCartridge, insertingC
             onClick={(e) => onSelect(item, e)}
             isSelected={activeCartridge?.id === item.id || insertingCartridge?.id === item.id}
           />
+        ))}
+        {Array.from({ length: emptySlots }).map((_, i) => (
+          <div
+            key={`empty-${i}`}
+            aria-hidden="true"
+            className="cart-slot rounded-[10px] w-full h-14 desk:w-[clamp(5.25rem,7.6vw,7rem)] desk:h-auto desk:aspect-[4/5] flex items-center justify-center font-pixel text-[6px] desk:text-[7px] leading-loose tracking-widest text-zinc-700 text-center"
+          >
+            EMPTY<br className="hidden desk:block" /> SLOT
+          </div>
         ))}
       </div>
     </div>

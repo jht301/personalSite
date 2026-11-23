@@ -11,7 +11,6 @@ import AboutContent from '@/components/sections/AboutContent';
 import JackalContent from '@/components/sections/JackalContent';
 import ProjectsContent from '@/components/sections/ProjectsContent';
 import ContactContent from '@/components/sections/ContactContent';
-import AutomateMCAContent from '@/components/sections/AutomateMCAContent';
 import GamesContent from '@/components/sections/GamesContent';
 import LabContent from '@/components/sections/LabContent';
 import SecretContent from '@/components/sections/SecretContent';
@@ -82,7 +81,6 @@ export default function Home() {
       case 'about': return <AboutContent />;
       case 'jackal': return <JackalContent />;
       case 'projects': return <ProjectsContent />;
-      case 'automatemca': return <AutomateMCAContent />;
       case 'games': return <GamesContent />;
       case 'lab': return <LabContent />;
       case 'contact': return <ContactContent />;
