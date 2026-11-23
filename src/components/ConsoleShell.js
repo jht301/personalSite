@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { useRef, useCallback } from 'react';
 import { StartButton, SelectButton, DPad, ActionButtons } from './HardwareControls';
 
-export default function ConsoleShell({ children, isMobileMode, activeCartridge, onEject, onSelectContact, onGamepadInput }) {
+export default function ConsoleShell({ children, activeCartridge, onEject, onSelectContact, onGamepadInput }) {
   const screenRef = useRef(null);
 
   const scrollScreen = useCallback((direction) => {
@@ -13,89 +13,56 @@ export default function ConsoleShell({ children, isMobileMode, activeCartridge, 
     const amount = direction === 'up' ? -200 : 200;
     scrollable.scrollBy({ top: amount, behavior: 'smooth' });
   }, []);
-  // isMobileMode mimics a vertical device, desktop mimics horizontal.
-  // The screen now takes up the vast majority of the real estate.
+
   return (
     <div
       id="console-shell"
-      className={clsx(
-        "relative mx-auto transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col items-center justify-center",
-        "bg-console-light-gray shadow-[inset_-4px_-4px_10px_rgba(0,0,0,0.1),_10px_10px_20px_rgba(0,0,0,0.3)]",
-        isMobileMode
-          ? "w-[95vw] max-w-[400px] h-[82dvh] rounded-[20px] p-1.5"
-          : "w-[80vw] max-w-[1200px] h-[90vh] max-h-[900px] rounded-[40px] p-3"
-      )}
-      style={{
-        boxShadow: "inset -5px -5px 15px rgba(0,0,0,0.2), inset 5px 5px 15px rgba(255,255,255,0.8), 20px 20px 40px rgba(0, 0, 0, 0.4)",
-      }}
+      className="shell relative w-full h-full flex flex-col rounded-[26px] desk:rounded-[44px] p-2 desk:p-4"
     >
+      {/* Cartridge slot lip along the top edge */}
+      <div className="absolute top-0 right-10 desk:right-16 w-24 desk:w-32 h-1.5 desk:h-2 rounded-b-md bg-[#1A1B24] shadow-[inset_0_-1px_2px_rgba(255,255,255,0.15)]" />
 
-      {/* Decorative details - simplified to avoid brand references */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex space-x-2 opacity-20">
-        <div className="w-12 h-1 bg-console-dark-gray rounded-full"></div>
-      </div>
+      {/* Bezel + LCD */}
+      <div className="bezel relative flex-1 min-h-0 flex flex-col rounded-[18px] desk:rounded-[28px] px-2 pb-2 desk:px-4 desk:pb-4">
+        <div className="flex items-center justify-between h-6 desk:h-8 px-1 shrink-0">
+          <div className="flex items-center gap-2">
+            <span className={clsx('led w-2 h-2 rounded-full', activeCartridge && 'led-on')} />
+            <span className="font-pixel text-[6px] desk:text-[7px] tracking-widest text-zinc-500">POWER</span>
+          </div>
+          <span className="font-pixel text-[6px] desk:text-[7px] tracking-widest text-zinc-500">
+            JHT-01 <span className="text-zinc-600">·</span> PLAYABLE PORTFOLIO
+          </span>
+        </div>
 
-
-      {/* Massive Screen Area */}
-      <div className={clsx(
-        "bg-console-dark-gray rounded-[24px] flex flex-col relative overflow-hidden shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]",
-        isMobileMode ? "w-full h-full" : "w-full h-full"
-      )}>
-
-        {/* Actual Screen viewport */}
-        <div className={clsx(
-          "bg-console-screen-bg w-full h-full relative overflow-hidden retro-screen-effect"
-        )}>
+        <div className="lcd relative flex-1 min-h-0 rounded-[6px] desk:rounded-[10px] overflow-hidden">
           {/* IN-SCREEN CONTENT RENDERED HERE */}
-          <div ref={screenRef} className={clsx("absolute inset-0 z-0", isMobileMode ? "bottom-24" : "bottom-32")}>
+          <div ref={screenRef} className="absolute inset-0 z-0">
             {children}
           </div>
+          <div className="crt absolute inset-0 z-40 pointer-events-none" />
+        </div>
+      </div>
 
-          {/* Solid gray bar behind controls */}
-          <div className={clsx("absolute bottom-0 inset-x-0 bg-console-mid-gray z-10", isMobileMode ? "h-24" : "h-32")}></div>
+      {/* Control deck */}
+      <div className="relative shrink-0 h-[5.75rem] desk:h-36 flex items-center justify-between px-4 desk:px-12">
+        <DPad
+          onUp={() => { scrollScreen('up'); onGamepadInput?.('up'); }}
+          onDown={() => { scrollScreen('down'); onGamepadInput?.('down'); }}
+          onLeft={() => onGamepadInput?.('left')}
+          onRight={() => onGamepadInput?.('right')}
+        />
 
-          {/* Hardware Controls Panel - Absolute positioned OVER the screen */}
-          <div className={clsx(
-            "absolute bottom-0 inset-x-0 pointer-events-none z-50 flex items-end justify-between px-6 pb-[10px]",
-            isMobileMode ? "h-24" : "h-24"
-          )}>
+        <div className="flex items-center gap-3 desk:gap-7 translate-y-4 desk:translate-y-5">
+          <StartButton onClick={onEject} />
+          <SelectButton onClick={onSelectContact} />
+        </div>
 
-            <div className={clsx("flex justify-between w-full h-full items-end", isMobileMode ? "flex-row px-2" : "")}>
-
-
-              {/* Left Side: D-Pad */}
-              <div className="pointer-events-auto">
-                <DPad
-                  small={isMobileMode}
-                  onUp={() => { scrollScreen('up'); onGamepadInput?.('up'); }}
-                  onDown={() => { scrollScreen('down'); onGamepadInput?.('down'); }}
-                  onLeft={() => onGamepadInput?.('left')}
-                  onRight={() => onGamepadInput?.('right')}
-                />
-              </div>
-
-              {/* Center: Start / Select */}
-              <div className={clsx(
-                "pointer-events-auto flex",
-                isMobileMode ? "absolute bottom-[10px] left-1/2 -translate-x-1/2 space-x-3" : "space-x-6 mb-[10px]"
-              )}>
-                <StartButton onClick={onEject} small={isMobileMode} />
-                <SelectButton onClick={onSelectContact} small={isMobileMode} />
-              </div>
-
-              {/* Right Side: A/B Buttons */}
-              <div className={clsx("pointer-events-auto", isMobileMode ? "pb-2 -mr-4" : "pb-4")}>
-                <ActionButtons
-                  small={isMobileMode}
-                  onA={() => onGamepadInput?.('a')}
-                  onB={() => onGamepadInput?.('b')}
-                />
-              </div>
-
-            </div>
-
-          </div>
-
+        <div className="flex items-center gap-10">
+          <div className="speaker hidden min-[1100px]:block w-[4.5rem] h-[3.25rem] -rotate-[18deg] opacity-80" />
+          <ActionButtons
+            onA={() => onGamepadInput?.('a')}
+            onB={() => onGamepadInput?.('b')}
+          />
         </div>
       </div>
     </div>

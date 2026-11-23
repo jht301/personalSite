@@ -1,42 +1,38 @@
 import { Mail, Linkedin, Github } from 'lucide-react';
+import SectionFrame from '../SectionFrame';
+import { CONTACT_CARTRIDGE } from '@/data/cartridges';
+
+const LINKS = [
+  { label: 'Email Me', href: 'mailto:jhterzi@gmail.com', Icon: Mail, external: false },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jht301/', Icon: Linkedin, external: true },
+  { label: 'GitHub', href: 'https://github.com/jht301', Icon: Github, external: true },
+];
 
 export default function ContactContent() {
   return (
-    <div className="w-full h-full flex flex-col px-6 pb-6 overflow-y-auto text-console-screen-dark space-y-4">
-      <h2 className="font-pixel text-lg uppercase border-b-2 border-console-screen-mid pb-2 mb-2 sticky top-0 bg-console-dark-gray z-10 w-[calc(100%+48px)] -mx-6 px-6 pt-6 text-console-red">
-        Contact
-      </h2>
-      
-      <div className="font-sans text-base space-y-6 pb-6 flex flex-col flex-grow justify-center">
-        <p className="text-center italic text-zinc-200 px-4 leading-relaxed">
-          "Available for selected consulting, product, and creative projects."
+    <SectionFrame title="Contact" kicker="SAY HELLO" icon={CONTACT_CARTRIDGE.icon} accent={CONTACT_CARTRIDGE.accent}>
+      <div className="max-w-md mx-auto w-full space-y-6 pt-2 desk:pt-8">
+        <p className="text-center italic text-zinc-300 leading-relaxed">
+          &ldquo;Available for selected consulting, product, and creative projects.&rdquo;
         </p>
 
-        <div className="space-y-4 pt-2 max-w-sm mx-auto w-full">
-          
-          <a href="mailto:jhterzi@gmail.com" className="flex items-center space-x-4 p-4 hover:bg-console-screen-light rounded cursor-pointer transition-colors group">
-            <div className="bg-console-red p-2 rounded-full text-white">
-              <Mail className="w-5 h-5" />
-            </div>
-            <span className="font-pixel text-sm text-white">Email Me</span>
-          </a>
-          
-          <a href="https://www.linkedin.com/in/jht301/" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 hover:bg-console-screen-light rounded cursor-pointer transition-colors group">
-            <div className="bg-blue-600 p-2 rounded-full text-white">
-              <Linkedin className="w-5 h-5" />
-            </div>
-            <span className="font-pixel text-sm text-white">LinkedIn</span>
-          </a>
-
-          <a href="https://github.com/jht301" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 hover:bg-console-screen-light rounded cursor-pointer transition-colors group">
-            <div className="bg-console-mid-gray p-2 rounded-full text-white mt-1">
-              <Github className="w-5 h-5" />
-            </div>
-            <span className="font-pixel text-sm text-white">GitHub</span>
-          </a>
-
+        <div className="space-y-5">
+          {LINKS.map(({ label, href, Icon, external }) => (
+            <a
+              key={label}
+              href={href}
+              {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              className="group pixel-box mx-[3px] flex items-center gap-4 p-4 bg-screen-panel hover:[--box:var(--accent)] transition-shadow"
+            >
+              <span className="bg-(--accent) text-screen p-2">
+                <Icon className="w-5 h-5" />
+              </span>
+              <span className="font-pixel text-xs text-white">{label}</span>
+              <span className="ml-auto font-pixel text-[10px] text-(--accent) group-hover:translate-x-1 transition-transform" aria-hidden="true">&gt;</span>
+            </a>
+          ))}
         </div>
       </div>
-    </div>
+    </SectionFrame>
   );
 }

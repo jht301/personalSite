@@ -21,19 +21,19 @@ const pixelFont = Press_Start_2P({
 
 export const metadata = {
   title: 'Jack | Playable Portfolio',
-  description: 'A retro handheld-inspired portfolio website.',
+  description: 'Games, apps, tools and websites by Jack H Terzi, on a retro handheld you can play with.',
   icons: {
     icon: '/favicon.svg',
   },
   openGraph: {
     title: 'Jack | Playable Portfolio',
-    description: 'A retro handheld-inspired portfolio website.',
+    description: 'Games, apps, tools and websites by Jack H Terzi, on a retro handheld you can play with.',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Jack | Playable Portfolio',
-    description: 'A retro handheld-inspired portfolio website.',
+    description: 'Games, apps, tools and websites by Jack H Terzi, on a retro handheld you can play with.',
     images: ['/og-image.png'],
   },
 };
